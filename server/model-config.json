@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "first_move_db"
+  },
+  "AccessToken": {
+    "dataSource": "first_move_db",
+    "public": true
+  },
+  "ACL": {
+    "dataSource": "first_move_db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "first_move_db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "first_move_db",
+    "public": false
+  },
+  "Profile": {
+    "dataSource": "first_move_db",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "BluetoothAccount": {
+    "dataSource": "first_move_db",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "ContactDetail": {
+    "dataSource": "first_move_db",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "Account": {
+    "dataSource": "first_move_db",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  }
+}

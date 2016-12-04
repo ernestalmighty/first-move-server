@@ -1,0 +1,17 @@
+{
+  "db": {
+    "password": "kurtcobain",
+    "name": "db",
+    "connector": "memory",
+    "user": "ernestgayyed"
+  },
+  "first_move_db": {
+    "host": "localhost",
+    "port": 3306,
+    "database": "first_move",
+    "password": "admin",
+    "name": "first_move_db",
+    "user": "root",
+    "connector": "mysql"
+  }
+}

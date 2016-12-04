@@ -1,0 +1,44 @@
+{
+  "name": "Profile",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "profileId": {
+      "type": "number",
+      "id": true
+    },
+    "accountId": {
+      "type": "number",
+      "required": true,
+      "comments": "References Account model"
+    },
+    "firstName": {
+      "type": "string",
+      "required": false
+    },
+    "lastName": {
+      "type": "string",
+      "required": false
+    },
+    "profileImage": {
+      "type": "string",
+      "required": false
+    },
+    "modifiedDate": {
+      "type": "date",
+      "required": true
+    },
+    "createdDate": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

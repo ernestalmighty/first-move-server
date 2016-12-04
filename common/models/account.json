@@ -1,0 +1,31 @@
+{
+  "name": "Account",
+  "base": "User",
+  "strict": false,
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "email": {
+      "type": "string",
+      "required": false
+    },
+    "socialMediaToken": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "loginApp"
+    }
+  ],
+  "methods": []
+}

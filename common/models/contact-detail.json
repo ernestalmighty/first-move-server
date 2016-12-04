@@ -1,0 +1,38 @@
+{
+  "name": "ContactDetail",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "contactDetailId": {
+      "type": "number",
+      "id": true
+    },
+    "accountId": {
+      "type": "number",
+      "id": false,
+      "required": true,
+      "comments": "References Account model"
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": false
+    },
+    "facebookUserName": {
+      "type": "string"
+    },
+    "twitterUserName": {
+      "type": "string"
+    },
+    "instagramUserName": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
