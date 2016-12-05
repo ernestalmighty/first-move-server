@@ -26,23 +26,36 @@ module.exports = function(Account) {
 
     Account.observe('before save', function(context, next) {
         if(context.isNewInstance) {
-            //check if  bluetooth account already exists
-            var filter = {
-                where: { deviceAddress : context.instance.deviceAddress }
-            };
 
-            Account.app.models.BluetoothAccount.findOne(filter, function(error, response) {
-                if(error) return next(error);
+            var err = new Error();
+            err.status = 404;
 
-                if(!response) {
-                    next();
-                } else {
-                    var err = new Error();
-                    err.status = 404;
-                    err.message = "Device already registered";
-                    next(err);
-                }
-            });
+            if (!context.instance.deviceAddress) {
+                err.message = "Indicate the device address";
+                next(err);
+            } else if (!context.instance.deviceName) {
+                err.message = "Indicate the device name";
+                next(err);
+            } else if (!context.instance.socialMediaToken) {
+                err.message = "Indicate the social media token";
+                next(err);
+            } else {
+                //check if  bluetooth account already exists
+                var filter = {
+                    where: { deviceAddress : context.instance.deviceAddress }
+                };
+
+                Account.app.models.BluetoothAccount.findOne(filter, function(error, response) {
+                    if(error) return next(error);
+
+                    if(!response) {
+                        next();
+                    } else {
+                        err.message = "Device already registered";
+                        next(err);
+                    }
+                });
+            }
         }
     });
 
