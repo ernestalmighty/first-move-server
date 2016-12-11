@@ -55,5 +55,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "ContactRequest": {
+    "dataSource": "first_move_db",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

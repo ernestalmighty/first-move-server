@@ -1,0 +1,52 @@
+{
+  "name": "ContactRequest",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "contactRequestId": {
+      "type": "number",
+      "id": true
+    },
+    "fromAccountId": {
+      "type": "number",
+      "required": true,
+      "comments": "References Account model"
+    },
+    "toAccountId": {
+      "type": "number",
+      "required": true,
+      "comments": "References Account model"
+    },
+    "requestMessage": {
+      "type": "string",
+      "required": false
+    },
+    "requestDate": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "permission": "DENY",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "*"
+    },
+    {
+      "accessType": "*",
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "*"
+    }
+  ],
+  "methods": []
+}
