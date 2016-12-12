@@ -21,11 +21,26 @@
   "acls": [
     {
       "accessType": "*",
+      "permission": "DENY",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "*"
+    },
+    {
+      "accessType": "*",
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "getAccountDetails"
+    },
+    {
+      "accessType": "*",
       "permission": "ALLOW",
       "principalType": "ROLE",
       "principalId": "$everyone",
       "property": "loginApp"
     }
+
   ],
   "methods": []
 }

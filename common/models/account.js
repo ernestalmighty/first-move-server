@@ -24,6 +24,41 @@ module.exports = function(Account) {
         });
     };
 
+    Account.getAccountDetails = function (accountId, callback) {
+        var accountFilter = {
+            where: { id : accountId }
+        };
+
+        Account.findOne(accountFilter, function (error, account) {
+            if(error) callback(error);
+
+            var accountLogin = {};
+            accountLogin.account = account;
+
+            var profileFilter = {
+                where: { accountId : accountId }
+            };
+
+            Account.app.models.Profile.findOne(profileFilter, function (error, profile) {
+                if(error) callback(error);
+
+                accountLogin.account.profile = profile;
+
+                var contactFilter = {
+                    where: { accountId : accountId }
+                };
+
+                Account.app.models.ContactDetail.findOne(contactFilter, function (error, profile) {
+                    if(error) callback(error);
+
+                    accountLogin.account.contactDetail = profile;
+
+                    callback(null, accountLogin);
+                });
+            });
+        });
+    };
+
     Account.observe('before save', function(context, next) {
         if(context.isNewInstance) {
 
@@ -49,6 +84,8 @@ module.exports = function(Account) {
                     if(error) return next(error);
 
                     if(!response) {
+                        context.instance.username = context.instance.use;
+                        context.instance.password = context.instance.socialMediaToken;
                         next();
                     } else {
                         err.message = "Device already registered";
@@ -84,5 +121,11 @@ module.exports = function(Account) {
     Account.remoteMethod('loginApp', {
         accepts: {arg: "loginDetails", type: "object", http: {source: "body"}},
         returns: {arg: "data", type: "object", root: true}
+    });
+
+    Account.remoteMethod('getAccountDetails', {
+        accepts: {arg: "accountId", type: "number", http: {source: "path"}},
+        returns: {arg: "data", type: "object", root: true},
+        http: { path: '/:accountId/getAccountDetails', verb: 'get' }
     });
 };
