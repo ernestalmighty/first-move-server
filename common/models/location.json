@@ -1,0 +1,47 @@
+{
+  "name": "Location",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "locationId": {
+      "type": "number",
+      "id": true
+    },
+    "accountId": {
+      "type": "number",
+      "required": true,
+      "comments": "References Account model"
+    },
+    "latitude": {
+      "type": "number",
+      "required": false
+    },
+    "longitude": {
+      "type": "number",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+   {
+      "accessType": "*",
+      "permission": "DENY",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "*"
+    },
+    {
+      "accessType": "*",
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "getNearbyUsers"
+    }
+  ],
+  "methods": []
+}

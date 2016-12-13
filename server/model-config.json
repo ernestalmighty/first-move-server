@@ -61,5 +61,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "Location": {
+	"dataSource": "first_move_db",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

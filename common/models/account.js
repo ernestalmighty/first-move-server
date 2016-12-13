@@ -52,8 +52,18 @@ module.exports = function(Account) {
                     if(error) callback(error);
 
                     accountLogin.account.contactDetail = profile;
+					
+					var bluetoothAccountFilter = {
+						where: { accountId : accountId }
+					};
 
-                    callback(null, accountLogin);
+					Account.app.models.BluetoothAccount.findOne(bluetoothAccountFilter, function (error, bluetoothAccount) {
+						if(error) callback(error);
+
+						accountLogin.account.bluetoothAccount = bluetoothAccount;
+						console.log(accountLogin);
+						callback(null, accountLogin);
+					});
                 });
             });
         });
