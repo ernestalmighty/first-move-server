@@ -1,5 +1,5 @@
 {
-  "name": "ContactRequest",
+  "name": "Message",
   "base": "PersistedModel",
   "strict": false,
   "idInjection": true,
@@ -7,7 +7,7 @@
     "validateUpsert": true
   },
   "properties": {
-    "contactRequestId": {
+    "messageId": {
       "type": "number",
       "id": true
     },
@@ -21,7 +21,7 @@
       "required": true,
       "comments": "References Account model"
     },
-    "requestMessage": {
+    "content": {
       "type": "string",
       "required": false
     },
@@ -32,21 +32,6 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [
-    {
-      "accessType": "*",
-      "permission": "DENY",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "property": "*"
-    },
-    {
-      "accessType": "*",
-      "permission": "ALLOW",
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "property": "*"
-    }
-  ],
+  "acls": [],
   "methods": []
 }
