@@ -8,7 +8,7 @@ module.exports = {
     publish: function(socket, options ){
         if(options){
             var data = options.data;
-            var toAccountId = "contact_request";
+            var toAccountId = options.toAccount;
 
             socket.emit(toAccountId, data);
 
