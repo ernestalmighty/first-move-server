@@ -94,7 +94,7 @@ module.exports = function(Account) {
                     if(error) return next(error);
 
                     if(!response) {
-                        context.instance.username = context.instance.use;
+                        context.instance.username = context.instance.username;
                         context.instance.password = context.instance.socialMediaToken;
                         next();
                     } else {

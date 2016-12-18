@@ -35,6 +35,13 @@
       "principalId": "$everyone",
       "property": "*"
     },
+	{
+      "accessType": "*",
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "*"
+    },
     {
       "accessType": "*",
       "permission": "ALLOW",
