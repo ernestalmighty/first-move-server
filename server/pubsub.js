@@ -8,9 +8,9 @@ module.exports = {
     publish: function(socket, options ){
         if(options){
             var data = options.data;
-            var toAccountId = options.toAccount;
+            var params = options.toAccount;
 
-            socket.emit(toAccountId, data);
+            socket.emit(params, data);
 
         }else{
             throw 'Error: Option must be an object type';
