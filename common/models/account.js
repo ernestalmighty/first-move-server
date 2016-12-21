@@ -52,18 +52,21 @@ module.exports = function(Account) {
                     if(error) callback(error);
 
                     accountLogin.account.contactDetail = profile;
-					
-					var bluetoothAccountFilter = {
-						where: { accountId : accountId }
-					};
 
-					Account.app.models.BluetoothAccount.findOne(bluetoothAccountFilter, function (error, bluetoothAccount) {
-						if(error) callback(error);
+                    console.log(accountLogin);
+                    callback(null, accountLogin);
 
-						accountLogin.account.bluetoothAccount = bluetoothAccount;
-						console.log(accountLogin);
-						callback(null, accountLogin);
-					});
+					// var bluetoothAccountFilter = {
+					// 	where: { accountId : accountId }
+					// };
+                    //
+					// Account.app.models.BluetoothAccount.findOne(bluetoothAccountFilter, function (error, bluetoothAccount) {
+					// 	if(error) callback(error);
+                    //
+					// 	accountLogin.account.bluetoothAccount = bluetoothAccount;
+					// 	console.log(accountLogin);
+					// 	callback(null, accountLogin);
+					// });
                 });
             });
         });
@@ -75,33 +78,31 @@ module.exports = function(Account) {
             var err = new Error();
             err.status = 404;
 
-            if (!context.instance.deviceAddress) {
-                err.message = "Indicate the device address";
-                next(err);
-            } else if (!context.instance.deviceName) {
-                err.message = "Indicate the device name";
-                next(err);
-            } else if (!context.instance.socialMediaToken) {
+            if (!context.instance.socialMediaToken) {
                 err.message = "Indicate the social media token";
                 next(err);
             } else {
+                context.instance.username = context.instance.username;
+                context.instance.password = context.instance.socialMediaToken;
+                next();
+
                 //check if  bluetooth account already exists
-                var filter = {
-                    where: { deviceAddress : context.instance.deviceAddress }
-                };
-
-                Account.app.models.BluetoothAccount.findOne(filter, function(error, response) {
-                    if(error) return next(error);
-
-                    if(!response) {
-                        context.instance.username = context.instance.username;
-                        context.instance.password = context.instance.socialMediaToken;
-                        next();
-                    } else {
-                        err.message = "Device already registered";
-                        next(err);
-                    }
-                });
+                // var filter = {
+                //     where: { deviceAddress : context.instance.deviceAddress }
+                // };
+                //
+                // Account.app.models.BluetoothAccount.findOne(filter, function(error, response) {
+                //     if(error) return next(error);
+                //
+                //     if(!response) {
+                //         context.instance.username = context.instance.username;
+                //         context.instance.password = context.instance.socialMediaToken;
+                //         next();
+                //     } else {
+                //         err.message = "Device already registered";
+                //         next(err);
+                //     }
+                // });
             }
         }
     });
@@ -115,15 +116,20 @@ module.exports = function(Account) {
             Account.app.models.Profile.create(context.instance, function (err, profile) {
                 if(err) next(err);
 
-                Account.app.models.BluetoothAccount.create(context.instance, function (err, bluetoothAccount) {
+                Account.app.models.ContactDetail.create(context.instance, function (err, contactDetail) {
                     if(err) return next(err);
 
-                    Account.app.models.ContactDetail.create(context.instance, function (err, contactDetail) {
-                        if(err) return next(err);
-
-                        next();
-                    });
+                    next();
                 });
+                // Account.app.models.BluetoothAccount.create(context.instance, function (err, bluetoothAccount) {
+                //     if(err) return next(err);
+                //
+                //     Account.app.models.ContactDetail.create(context.instance, function (err, contactDetail) {
+                //         if(err) return next(err);
+                //
+                //         next();
+                //     });
+                // });
             });
         }
     });
