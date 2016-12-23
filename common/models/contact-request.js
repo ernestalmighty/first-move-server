@@ -75,7 +75,7 @@ module.exports = function(ContactRequest) {
 			"p.profileId, " +
 			"p.firstname, " +
 			"p.lastname, " +
-			"p.title, " +
+			"p.jobtitle, " +
 			"p.company, " +
 			"p.profileImage, " +
 			"p.status, " +
