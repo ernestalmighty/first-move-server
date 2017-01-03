@@ -24,6 +24,21 @@ module.exports = function(Account) {
         });
     };
 
+    Account.updateAccount = function (accountToUpdate, callback) {
+        var accountInstance = {};
+        accountInstance.id = accountToUpdate.id;
+        accountInstance.username = accountToUpdate.username;
+        accountInstance.email = accountToUpdate.email;
+
+        var profileInstance = {};
+        profileInstance.firstName = accountToUpdate.firstName;
+        profileInstance.lastName = accountToUpdate.lastName;
+        profileInstance.profileImage = accountToUpdate.profileImage;
+        profileInstance.company = accountToUpdate.company;
+        profileInstance.jo
+
+    };
+
     Account.getAccountDetails = function (accountId, callback) {
         var accountFilter = {
             where: { id : accountId }
@@ -52,7 +67,6 @@ module.exports = function(Account) {
                     if(error) callback(error);
 
                     accountLogin.account.contactDetail = profile;
-					
 					callback(null, accountLogin);
                 });
             });
@@ -68,8 +82,10 @@ module.exports = function(Account) {
                 err.message = "Indicate the social media token";
                 next(err);
             } else {
-				next();
-			}
+                context.instance.username = context.instance.username;
+                context.instance.password = context.instance.socialMediaToken;
+                next();
+            }
         } else {
             next();
         }
@@ -85,13 +101,17 @@ module.exports = function(Account) {
                 if(err) next(err);
 
                 Account.app.models.ContactDetail.create(context.instance, function (err, contactDetail) {
-					if(err) return next(err);
+                    if(err) return next(err);
+
                     next();
                 });
             });
         } else {
-			next();
-		}
+            Account.getAccountDetails(context.instance.id, function(err, account) {
+                context.instance.profile = account.profile;
+                next();
+            });
+        }
     });
 
     Account.remoteMethod('loginApp', {
@@ -103,5 +123,10 @@ module.exports = function(Account) {
         accepts: {arg: "accountId", type: "number", http: {source: "path"}},
         returns: {arg: "data", type: "object", root: true},
         http: { path: '/:accountId/getAccountDetails', verb: 'get' }
+    });
+
+    Account.remoteMethod('updateAccount', {
+        accepts: {arg: "accountToUpdate", type: "object", http: {source: "body"}},
+        returns: {arg: "data", type: "object", root: true}
     });
 };

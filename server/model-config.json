@@ -67,5 +67,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "SharedContact": {
+    "dataSource": "first_move_db",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }
