@@ -22,11 +22,13 @@ module.exports = function(ContactRequest) {
 		dataSource.connector.client.query(sql, [accountId], callback);
 	}; 
 	
-	ContactRequest.acceptContactRequest = function(contactRequestId, callback) {
-		var sql = "UPDATE contactrequest SET status = 'accepted' WHERE contactRequestId = ?";
+	ContactRequest.acceptContactRequest = function(contactRequestId, toBeShared, callback) {
+	
+		var sql = "UPDATE contactrequest SET status = 'accepted', toAccountShared = ? WHERE contactRequestId = ?";
 		
-		dataSource.connector.client.query(sql, [contactRequestId], function(error, data) {
-
+		dataSource.connector.client.query(sql, [toBeShared.toAccountShared, contactRequestId], function(error, data) {
+		console.log(error);
+		console.log(data);
 			ContactRequest.findById(contactRequestId, function(error, contactrequest){
 				ContactRequest.app.models.Account.getAccountDetails(contactrequest.toAccountId, function(err, account){
 					var socket = ContactRequest.app.io;
@@ -113,6 +115,7 @@ module.exports = function(ContactRequest) {
 				account.profile = profile;
 				account.requestMessage = context.instance.requestMessage;
 				account.contactRequestId = context.instance.contactRequestId;
+				account.fromAccountShared = context.instance.fromAccountShared;
 
 				var socket = ContactRequest.app.io;
 				pubsub.publish(socket, {
@@ -131,7 +134,8 @@ module.exports = function(ContactRequest) {
     });
 	
 	ContactRequest.remoteMethod('acceptContactRequest', {
-		accepts: {arg: "contactRequestId", type: "number", http: {source: "path"}},
+		accepts: [{arg: "contactRequestId", type: "number", http: {source: "path"}}, 
+				  {arg: "toBeShared", type: "object", http: {source: "body"}}],
 		returns: {arg: "data", type: "object", root: true},
 		http: {path: '/:contactRequestId/acceptContactRequest', verb: 'post'}
 	});

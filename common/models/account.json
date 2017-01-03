@@ -31,7 +31,7 @@
       "permission": "ALLOW",
       "principalType": "ROLE",
       "principalId": "$authenticated",
-      "property": "getAccountDetails"
+      "property": "*"
     },
     {
       "accessType": "*",

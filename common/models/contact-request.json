@@ -13,13 +13,21 @@
     },
     "fromAccountId": {
       "type": "number",
-      "required": true,
+      "required": false,
       "comments": "References Account model"
     },
     "toAccountId": {
       "type": "number",
-      "required": true,
+      "required": false,
       "comments": "References Account model"
+    },
+	"toAccountShared": {
+      "type": "string",
+      "required": false
+    },
+	"fromAccountShared": {
+      "type": "string",
+      "required": false
     },
     "requestMessage": {
       "type": "string",
@@ -31,7 +39,7 @@
     },
     "createdDate": {
       "type": "date",
-      "required": true
+      "required": false
     }
   },
   "validations": [],
